@@ -1,0 +1,10 @@
+[[1m[31mDEBUG[m] Received 0x6c bytes:
+    b'Prove to me that you know an w such that g^w = y mod p. Send me a = g^r mod p for some random r in range(q)\n'
+[[1m[31mDEBUG[m] Sent 0x9 bytes:
+    b'{"a": 2}\n'
+[[1m[31mDEBUG[m] Received 0xca bytes:
+    b'{"e": 2083594220626471431719721360825070907494028104287669367048261289931676009668696047582935084156193018075477128497713578711909493230445169002624243785074446, "message": "send me z = r + e*w mod q"}\n'
+[[1m[31mDEBUG[m] Sent 0xa2 bytes:
+    b'{"z": 9513942975483174670261956697143905076631196399406067462373624439969398598824816444939457811299874847926118018765617079318595430509923927217224969107172954}\n'
+[[1m[31mDEBUG[m] Received 0x75 bytes:
+    b'{"flag": "crypto{sigma_protocol_complete!}", "message": "You convinced me you know an `w` such that g^w = y mod p!"}\n'
