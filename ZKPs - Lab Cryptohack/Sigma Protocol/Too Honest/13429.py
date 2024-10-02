@@ -19,7 +19,7 @@ k1 = 512
 k2 = 128
 S = 2**k1
 R = 2**(2*k2+k1)
-
+r = random.randint(0,R)
 padded_flag = FLAG + os.urandom(S.bit_length() // 8 - len(FLAG) - 2)
 flag = bytes_to_long(padded_flag)
 

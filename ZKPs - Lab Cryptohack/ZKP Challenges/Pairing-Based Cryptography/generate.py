@@ -18,7 +18,7 @@ for bit in bin(int(FLAG.hex(),16))[2:]:
     xG, yG, zG = gen_test(int(bit))
     challenges.append([xG, yG, zG])
 
-with open("output.txt", "w") as f:
+with open("output1.txt", "w") as f:
     for chal in challenges:
         # Note: in your solution script, you can read each line by calling eval() on it
         f.write(str(chal))

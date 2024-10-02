@@ -15,13 +15,13 @@ def merge_nodes(a, b):
 def send_message(sock, message):
     sock.sendall(message.encode() + b'\n')
     response = sock.recv(4096).decode()
-    print("Sent message:", message)
-    print("Received response:", response)
     return response
 
 def request_nodes(sock, layers_needed):
     wanted_nodes = ';'.join([f"{layer},{count}" for layer, count in layers_needed.items()])
     response = send_message(sock, f'{{"option": "get_nodes", "nodes": "{wanted_nodes}"}}')
+    print("Requesting nodes:", wanted_nodes)
+    print("Response:", response)
     return response
 
 def parse_nodes_response(response):
@@ -30,12 +30,10 @@ def parse_nodes_response(response):
         if "error" in data:
             print("Error in response:", data["error"])
             return None
+        # Extract the nodes from the response
         nodes_str = data.get("msg", "[]")
         nodes = [bytes.fromhex(node) for node in nodes_str.strip("[]").replace('"', '').split(', ')]
         return nodes
-    except json.JSONDecodeError:
-        print("Response is not valid JSON:", response)
-        return None
     except Exception as e:
         print("Parsing error:", e)
         return None
@@ -48,15 +46,16 @@ def compute_root(nodes):
 def submit_proof(sock, root_hash):
     root_hex = root_hash.hex()
     response = send_message(sock, f'{{"option": "do_proof", "root": "{root_hex}"}}')
+    print("Submitting proof:", root_hex)
+    print("Response:", response)
     return response
 
 def main():
+    # Establish socket connection
     with socket.create_connection((HOST, PORT)) as sock:
-        # Test the server with a basic request
+        # Initial request to get Layer 0 nodes
         response = send_message(sock, '{"option": "get_nodes", "nodes": "0,8"}')
         print("Initial response:", response)
-
-        # Attempt to parse nodes from the initial response
         nodes = parse_nodes_response(response)
         if nodes is None:
             return
